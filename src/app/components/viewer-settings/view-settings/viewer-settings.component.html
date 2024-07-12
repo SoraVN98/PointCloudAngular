@@ -1,3 +1,4 @@
+
 <mat-card class="setting-panel-icon">
   <!-- Button to show the panel-->
   <button mat-raised-button color="primary" (click)="onClickSettings()">
@@ -16,13 +17,15 @@
 
   <!-- Point size slider -->
   <mat-slider class="base-slider" [disabled]="disabled" [max]="maxSize" [min]="minSize" [step]="step"
-    [(ngModel)]="valueSize" (input)="onChangePointSize($event)">
+    (input)="onChangePointSize($event)">
+    <input matSliderThumb [(ngModel)]="valueSize" #sizeSlider>
   </mat-slider>
   <div class="example-selected-value">Point Size = {{valueSize.toFixed(2)}}</div>
 
   <!-- Point opacity slider-->
   <mat-slider class="base-slider" [disabled]="disabled" [max]="maxOpacity" [min]="minOpacity" [step]="step"
-    [(ngModel)]="valueOpacity" (input)="onChangeOpacity($event)">
+    (input)="onChangeOpacity($event)">
+    <input matSliderThumb [(ngModel)]="valueOpacity" #opacitySlider>
   </mat-slider>
   <div class="example-selected-value">Point Opacity = {{valueOpacity.toFixed(2)}}</div>
 
