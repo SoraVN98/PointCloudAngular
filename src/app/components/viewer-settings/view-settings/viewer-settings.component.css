@@ -1,0 +1,32 @@
+/* @import '~@angular/material/prebuilt-themes/purple-green.css'; */
+@import "https://fonts.googleapis.com/icon?family=Material+Icons";
+
+.base-slider {
+  margin: 10px;
+}
+.mat-card {
+  z-index: 1;
+}
+.mat-card-setting {
+  width: 200px;
+  margin: 20px;
+}
+
+.setting-panel-icon {
+  height: 40px;
+  width: 80px;
+  margin: 20px;
+}
+
+.example-radio-group {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.example-radio-button {
+  margin: 5px;
+}
+
+.example-selected-value {
+  margin: 15px 0;
+}
