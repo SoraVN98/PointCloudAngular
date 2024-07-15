@@ -20,10 +20,11 @@
     "@angular/platform-browser": "^17.3.0",
     "@angular/platform-browser-dynamic": "^17.3.0",
     "@angular/router": "^17.3.0",
-    "@pix4d/three-potree-loader": "^0.0.8",
+    "@pnext/three-loader": "^0.3.7",
     "rxjs": "~7.8.0",
-    "three": "^0.95.0",
+    "three": "~0.160.0",
     "tslib": "^2.3.0",
+    "web-ifc-three": "^0.0.126",
     "zone.js": "~0.14.3"
   },
   "devDependencies": {

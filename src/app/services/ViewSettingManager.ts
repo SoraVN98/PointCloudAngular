@@ -1,4 +1,4 @@
-import { PointShape, PointColorType } from '@pix4d/three-potree-loader';
+import { PointShape, PointColorType } from '@pnext/three-loader';
 
 // This class need to inherit from an event manager.
 

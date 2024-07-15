@@ -1,7 +1,7 @@
-import { PerspectiveCamera, Scene, WebGLRenderer, Vector3, Box3 } from 'three';
-import { PointCloudOctree, Potree } from '@pix4d/three-potree-loader';
+import { PerspectiveCamera, Scene, WebGLRenderer, Vector3, Box3, AmbientLight, DirectionalLight } from 'three';
+import { PointCloudOctree, Potree } from '@pnext/three-loader';
 import { CameraControls } from './camera-controls';
-
+import { IFCLoader } from 'web-ifc-three/IFCLoader';
 export class Viewer {
   /**
    * The element where we will insert our canvas.
@@ -18,6 +18,9 @@ export class Viewer {
   /**
    * The camera used to view the scene.
    */
+  private light = new AmbientLight(0x404040); // soft white light
+  private directionalLight1 = new DirectionalLight(0xffeeff, 0.8);
+  private directionalLight2 = new DirectionalLight(0xffffff, 0.8);
   private camera = new PerspectiveCamera(45, NaN, 0.1, 1000);
   /**
    * Controls which update the position of the camera.
@@ -43,6 +46,7 @@ export class Viewer {
   /**
    * Private point cloud Octree instance keep for the destroy function.
    */
+  // @ts-ignore
   private pointCloudOctree: PointCloudOctree;
 
   /**
@@ -58,6 +62,12 @@ export class Viewer {
 
     this.targetEl = targetEl;
     targetEl.appendChild(this.renderer.domElement);
+
+    this.directionalLight1.position.set(1, 1, 1);
+    this.directionalLight2.position.set(- 1, 0.5, - 1);
+    this.scene.add(this.light);
+    this.scene.add(this.directionalLight1);
+    this.scene.add(this.directionalLight2);
 
     this.resize();
     window.addEventListener('resize', this.resize);
@@ -180,7 +190,12 @@ export class Viewer {
     }
   };
 
-  loadIfc() {
-
+  loadIfc(url: string) {
+    const ifcLoader = new IFCLoader();
+    ifcLoader.ifcManager.setWasmPath('./assets/');
+    ifcLoader.load(url, (model) => {
+      console.log("model", model)
+      this.scene.add(model.mesh)
+    })
   }
 }

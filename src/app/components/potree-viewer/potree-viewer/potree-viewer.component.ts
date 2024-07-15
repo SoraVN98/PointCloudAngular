@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Viewer } from '../../../services/viewer';
-import { PointCloudOctree } from '@pix4d/three-potree-loader';
+import { PointCloudOctree } from '@pnext/three-loader';
 import { ViewerSettingManager } from '../../../services/ViewSettingManager';
 
 @Component({
@@ -35,20 +35,10 @@ export class PotreeViewerComponent implements OnInit, OnDestroy {
     if (target) {
       this.viewer.initialize(target);
     }
-    // Load point cloud file
-    const baseUrl = './assets/pointclouds/demo/'
-    this.viewer
-      .load('cloud.js', baseUrl)
-      .then(pco => {
-        pco.translateX(-1);
-        pco.rotateX(-Math.PI / 2);
-        this.pointCloudOctree = pco;
-        this.updatePointCloud();
-        console.log("point", this.pointCloudOctree)
-      })
-      .catch(err => console.error(err));
-    // Load ifc file
-    this.viewer.loadIfc();
+    const pcURL = './assets/pointclouds/demo/'
+    const ifcURL = './assets/ifc/Project1.ifc'
+    // this.loadPointCloud(pcURL);
+    this.loadIfcFile(ifcURL);
   }
 
   /**
@@ -57,5 +47,22 @@ export class PotreeViewerComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     ViewerSettingManager.Instance.offChange(this.idChange);
     this.viewer.destroy();
+  }
+
+  loadPointCloud(pcURL : string) {
+    this.viewer
+      .load('cloud.js', pcURL)
+      .then(pco => {
+        pco.translateX(-1);
+        pco.rotateX(-Math.PI / 2);
+        this.pointCloudOctree = pco;
+        this.updatePointCloud();
+        console.log("point", this.pointCloudOctree)
+      })
+      .catch(err => console.error(err));
+  }
+
+  loadIfcFile(url : string) {
+    this.viewer.loadIfc(url)
   }
 }
