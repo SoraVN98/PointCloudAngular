@@ -35,6 +35,7 @@ export class PotreeViewerComponent implements OnInit, OnDestroy {
     if (target) {
       this.viewer.initialize(target);
     }
+    // Load point cloud file
     const baseUrl = './assets/pointclouds/demo/'
     this.viewer
       .load('cloud.js', baseUrl)
@@ -46,9 +47,8 @@ export class PotreeViewerComponent implements OnInit, OnDestroy {
         console.log("point", this.pointCloudOctree)
       })
       .catch(err => console.error(err));
-    // // load ifc
-    // const ifcUrl = './assets/ifc/Project1.ifc'
-    // this.viewer.loadIfcModel(ifcUrl)
+    // Load ifc file
+    this.viewer.loadIfc();
   }
 
   /**

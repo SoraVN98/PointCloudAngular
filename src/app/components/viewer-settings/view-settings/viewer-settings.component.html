@@ -1,12 +1,10 @@
-
 <mat-card class="setting-panel-icon">
   <!-- Button to show the panel-->
   <button mat-raised-button color="primary" (click)="onClickSettings()">
     <mat-icon>settings</mat-icon>
   </button>
 </mat-card>
-
-<mat-card id="#settingPanel" *ngIf="settingsActivated" class="mat-card-setting">
+<mat-card id="settingPanel" *ngIf="settingsActivated" class="mat-card-setting">
   <!-- Point shape Menu-->
   <mat-radio-group class="example-radio-group" [(ngModel)]="shapeSelected">
     <mat-radio-button class="example-radio-button" *ngFor="let shape of ShapesType" [value]="shape"

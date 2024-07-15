@@ -1,7 +1,6 @@
 import { PerspectiveCamera, Scene, WebGLRenderer, Vector3, Box3 } from 'three';
 import { PointCloudOctree, Potree } from '@pix4d/three-potree-loader';
 import { CameraControls } from './camera-controls';
-// import { IFCLoader } from 'web-ifc-three/IFCLoader';
 
 export class Viewer {
   /**
@@ -181,15 +180,7 @@ export class Viewer {
     }
   };
 
-  // loadIfcModel(url: string) {
-  //   const ifcLoader = new IFCLoader();
-  //   ifcLoader.load(url, (ifcModel) => {
-  //     this.scene.add(ifcModel);
-  //     const box = new Box3().setFromObject(ifcModel);
-  //     const size = new Vector3();
-  //     box.getSize(size);
-  //     this.camera.position.set(size.x, size.y, size.z * 1.5);
-  //     this.camera.lookAt(box.getCenter(new Vector3()));
-  //   });
-  // }
+  loadIfc() {
+
+  }
 }
