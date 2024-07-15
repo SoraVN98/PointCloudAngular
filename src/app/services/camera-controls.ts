@@ -60,7 +60,7 @@ export class CameraControls {
    * @param event
    */
   handleMouseWheel(event : any) {
-    event.preventDefault();
+    // event.preventDefault();
     event.stopPropagation();
 
     if (event.deltaY < 0) {
@@ -100,7 +100,7 @@ export class CameraControls {
     event.preventDefault();
 
     if (this.state === CAMERA_STATE.ROTATE) {
-      this.handleMouseMoveRotate(event);
+      // this.handleMouseMoveRotate(event);
     }
   }
 

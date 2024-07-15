@@ -37,8 +37,10 @@ export class PotreeViewerComponent implements OnInit, OnDestroy {
     }
     const pcURL = './assets/pointclouds/demo/'
     const ifcURL = './assets/ifc/Project1.ifc'
-    // this.loadPointCloud(pcURL);
+    const ifcURL1 = './assets/ifc/test2.ifc'
+    this.loadPointCloud(pcURL);
     this.loadIfcFile(ifcURL);
+    // this.loadIfcFile(ifcURL1);
   }
 
   /**
@@ -49,7 +51,7 @@ export class PotreeViewerComponent implements OnInit, OnDestroy {
     this.viewer.destroy();
   }
 
-  loadPointCloud(pcURL : string) {
+  loadPointCloud(pcURL: string) {
     this.viewer
       .load('cloud.js', pcURL)
       .then(pco => {
@@ -62,7 +64,8 @@ export class PotreeViewerComponent implements OnInit, OnDestroy {
       .catch(err => console.error(err));
   }
 
-  loadIfcFile(url : string) {
+  loadIfcFile(url: string) {
     this.viewer.loadIfc(url)
   }
+
 }

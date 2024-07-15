@@ -2,6 +2,9 @@ import { PerspectiveCamera, Scene, WebGLRenderer, Vector3, Box3, AmbientLight, D
 import { PointCloudOctree, Potree } from '@pnext/three-loader';
 import { CameraControls } from './camera-controls';
 import { IFCLoader } from 'web-ifc-three/IFCLoader';
+import { TransformControls } from 'three/examples/jsm/controls/TransformControls'
+import { IFCModel } from 'web-ifc-three/IFC/components/IFCModel';
+
 export class Viewer {
   /**
    * The element where we will insert our canvas.
@@ -195,7 +198,29 @@ export class Viewer {
     ifcLoader.ifcManager.setWasmPath('./assets/');
     ifcLoader.load(url, (model) => {
       console.log("model", model)
-      this.scene.add(model.mesh)
+      this.transformModel(model)
+      this.scene.add(model)
+    })
+  }
+
+
+  transformModel(ifcModel: IFCModel) {
+    const controls = new TransformControls(this.camera, this.renderer.domElement)
+    controls.attach(ifcModel)
+    this.scene.add(controls)
+
+    window.addEventListener('keydown', function (event) {
+      switch (event.code) {
+        case 'KeyG':
+          controls.setMode('translate')
+          break
+        case 'KeyR':
+          controls.setMode('rotate')
+          break
+        case 'KeyS':
+          controls.setMode('scale')
+          break
+      }
     })
   }
 }
