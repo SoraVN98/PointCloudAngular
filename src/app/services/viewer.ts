@@ -153,10 +153,15 @@ export class Viewer {
         // Add the point cloud to the scene and to our list of
         // point clouds. We will pass this list of point clouds to
         // potree to tell it to update them.
+        this.scene.children.forEach((child) => {
+          if (child.children[0] &&  child.children[0].type === "Points") {
+            this.scene.remove(child)
+          }
+        })
         this.scene.add(pco);
+        this.pointClouds.pop();
         this.pointClouds.push(pco);
         this.pointCloudOctree = pco;
-
         return pco;
       });
   }

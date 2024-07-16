@@ -69,7 +69,7 @@ export class ViewerSettingsComponent {
    * @param event
    */
   onChangePointSize(event: any) {
-    const size = event.value;
+    const size = this.valueSize;
     ViewerSettingManager.Instance.setSize(size);
   }
 
@@ -78,7 +78,7 @@ export class ViewerSettingsComponent {
    * @param event
    */
   onChangeOpacity(event: any) {
-    const opacity = event.value;
+    const opacity = this.valueOpacity;
     ViewerSettingManager.Instance.setOpacity(opacity);
   }
 
