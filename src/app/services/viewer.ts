@@ -1,9 +1,8 @@
-import { PerspectiveCamera, Scene, WebGLRenderer, Vector3, Box3, AmbientLight, DirectionalLight } from 'three';
+import { PerspectiveCamera, Scene, WebGLRenderer, Vector3, Box3, AmbientLight, DirectionalLight, Vector2, Raycaster } from 'three';
 import { PointCloudOctree, Potree } from '@pnext/three-loader';
 import { CameraControls } from './camera-controls';
 import { IFCLoader } from 'web-ifc-three/IFCLoader';
 import { TransformControls } from 'three/examples/jsm/controls/TransformControls'
-import { IFCModel } from 'web-ifc-three/IFC/components/IFCModel';
 
 export class Viewer {
   /**
@@ -51,7 +50,7 @@ export class Viewer {
    */
   // @ts-ignore
   private pointCloudOctree: PointCloudOctree;
-
+  private transformControls: TransformControls[] = [];
   /**
    * Initializes the viewer into the specified element.
    *
@@ -82,6 +81,8 @@ export class Viewer {
     window.addEventListener('mousemove', this.cameraControls.onMouseMove.bind(this.cameraControls), false);
     // manage mouse up to stop the rotation
     window.addEventListener('mouseup', this.cameraControls.onMouseUp.bind(this.cameraControls), false);
+    // select mesh to translate, rotate, scale
+    window.addEventListener('dblclick', (event) => { this.addTransformControls(event) }, false);
 
     requestAnimationFrame(this.loop);
   }
@@ -176,7 +177,9 @@ export class Viewer {
     if (prevTime === undefined) {
       return;
     }
-
+    this.transformControls.forEach((control) => {
+      control.setSize(20 / control.position.distanceTo(this.camera.position) * Math.min(1.9 * Math.tan(Math.PI * this.camera.fov / 360) / this.camera.zoom, 7));
+    })
     this.update(time - prevTime);
     this.render();
   };
@@ -198,29 +201,71 @@ export class Viewer {
     ifcLoader.ifcManager.setWasmPath('./assets/');
     ifcLoader.load(url, (model) => {
       console.log("model", model)
-      this.transformModel(model)
+      // this.transformModel(model)
       this.scene.add(model)
     })
   }
 
 
-  transformModel(ifcModel: IFCModel) {
-    const controls = new TransformControls(this.camera, this.renderer.domElement)
-    controls.attach(ifcModel)
-    this.scene.add(controls)
+  // transformModel(ifcModel: IFCModel) {
+  //   const control = new TransformControls(this.camera, this.renderer.domElement)
+  //   this.transformControls.push(control)
+  //   // control.addEventListener('dragging-changed', function (event) {
+  //   //   control.enabled = !event.value;
+  //   // });
+  //   // controls.addEventListener('change', this.render);
+  //   control.attach(ifcModel)
+  //   this.scene.add(control)
 
-    window.addEventListener('keydown', function (event) {
-      switch (event.code) {
-        case 'KeyG':
-          controls.setMode('translate')
-          break
-        case 'KeyR':
-          controls.setMode('rotate')
-          break
-        case 'KeyS':
-          controls.setMode('scale')
-          break
+  //   console.log("transform", this.transformControls)
+  //   window.addEventListener('keydown', function (event) {
+  //     switch (event.code) {
+  //       case 'KeyG':
+  //         control.setMode('translate')
+  //         break
+  //       case 'KeyR':
+  //         control.setMode('rotate')
+  //         break
+  //       case 'KeyS':
+  //         control.setMode('scale')
+  //         break
+  //     }
+  //   })
+  // }
+
+  addTransformControls(event : MouseEvent) {
+    const mouse = new Vector2();
+    const raycaster = new Raycaster();
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    raycaster.setFromCamera(mouse, this.camera);
+
+    for (const child of this.scene.children) {
+      const intersects = raycaster.intersectObject(child);
+      if (child.type == 'Mesh' && intersects.length > 0) {
+        const control = new TransformControls(this.camera, this.renderer.domElement);
+        this.transformControls.push(control);
+        control.attach(child);
+        this.scene.add(control);
+        window.addEventListener('keydown', function (event) {
+          switch (event.code) {
+            case 'KeyG':
+              control.setMode('translate');
+              break;
+            case 'KeyR':
+              control.setMode('rotate');
+              break;
+            case 'KeyS':
+              control.setMode('scale');
+              break;
+          }
+        })
+        break;
+      } else {
+        this.transformControls.map(control => {
+          control.detach();
+        })
       }
-    })
+    }
   }
 }
