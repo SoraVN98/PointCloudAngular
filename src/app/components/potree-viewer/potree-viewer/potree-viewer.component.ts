@@ -12,7 +12,7 @@ export class PotreeViewerComponent implements OnInit, OnDestroy {
   private viewer!: Viewer;
   private pointCloudOctree!: PointCloudOctree;
   private idChange!: number;
-
+  public pointCloudUrl: string = 'demo';
   constructor() {
   }
 
@@ -35,12 +35,13 @@ export class PotreeViewerComponent implements OnInit, OnDestroy {
     if (target) {
       this.viewer.initialize(target);
     }
-    const pcURL = './assets/pointclouds/demo/'
+
+    // const pcURL = './assets/pointclouds/demo/'
     const ifcURL = './assets/ifc/Project1.ifc'
     const ifcURL1 = './assets/ifc/test2.ifc'
-    this.loadPointCloud(pcURL);
-    this.loadIfcFile(ifcURL1);
-    this.loadIfcFile(ifcURL);
+    // this.loadPointCloud(pcURL);
+    // this.loadIfcFile(ifcURL1);
+    // this.loadIfcFile(ifcURL);
 
   }
 
@@ -52,9 +53,11 @@ export class PotreeViewerComponent implements OnInit, OnDestroy {
     this.viewer.destroy();
   }
 
-  loadPointCloud(pcURL: string) {
+  loadPointCloud() {
+    const pcUrl = document.getElementById('pointcloud-url') as HTMLInputElement;
+    const url = './assets/pointclouds/' + pcUrl.value + '/'
     this.viewer
-      .load('cloud.js', pcURL)
+      .load('cloud.js', url)
       .then(pco => {
         pco.translateX(-1);
         pco.rotateX(-Math.PI / 2);

@@ -3,10 +3,10 @@ import { NgModule } from '@angular/core';
 
 
 import { AppComponent } from './app.component';
-import {PotreeViewerModule} from './components/potree-viewer/potree-viewer.module';
-import {ViewerSettingsModule} from './components/viewer-settings/viewer-settings.module';
+import { PotreeViewerModule } from './components/potree-viewer/potree-viewer.module';
+import { ViewerSettingsModule } from './components/viewer-settings/viewer-settings.module';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-
+import { FormsModule } from '@angular/forms'
 
 @NgModule({
   declarations: [
@@ -15,7 +15,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
   imports: [
     BrowserModule,
     PotreeViewerModule,
-    ViewerSettingsModule
+    ViewerSettingsModule,
+    FormsModule
   ],
   providers: [
     provideAnimationsAsync()

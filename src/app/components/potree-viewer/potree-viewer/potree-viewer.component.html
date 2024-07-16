@@ -1,2 +1,14 @@
 <div id="target">
+    <div class="form">
+        <div class="form-row">
+            <label for="pointcloud-url" class="col-3">Point Cloud</label>
+            <input type="url" id="pointcloud-url" [(ngModel)]="pointCloudUrl" class="col-5 form-control form-control-sm">
+            <button id="pointcloud-btn" (click)="loadPointCloud()" class="col-4 btn btn-sm btn-primary">Load Pointcloud</button>
+        </div>
+        <!-- <div class="form-row">
+            <label for="pointcloud-url" class="col-3">IFC1</label>
+            <input type="url" id="ifc1-url" class="col-5 form-control form-control-sm">
+            <button id="ifc1-btn" (click)="loadIfcFile()" class="col-4 btn btn-sm btn-primary">Load IFC</button>
+        </div> -->
+    </div>
 </div>
