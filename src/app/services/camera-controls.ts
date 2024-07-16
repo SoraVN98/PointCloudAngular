@@ -1,7 +1,7 @@
-import {PerspectiveCamera, Vector3, Vector2, MOUSE} from 'three';
+import { PerspectiveCamera, Vector3, Vector2, MOUSE } from 'three';
 
-const CAMERA_STATE = {NONE: -1, ROTATE: 0, DOLLY: 1, PAN: 2, TOUCH_ROTATE: 3, TOUCH_DOLLY_PAN: 4};
-const MOUSSE_BUTTONS = {ORBIT: MOUSE.LEFT, ZOOM: MOUSE.MIDDLE, PAN: MOUSE.RIGHT};
+const CAMERA_STATE = { NONE: -1, ROTATE: 0, DOLLY: 1, PAN: 2, TOUCH_ROTATE: 3, TOUCH_DOLLY_PAN: 4 };
+const MOUSSE_BUTTONS = { ORBIT: MOUSE.LEFT, ZOOM: MOUSE.MIDDLE, PAN: MOUSE.RIGHT };
 
 /**
  * Simple camera controls which just make the camera spin around a target position.
@@ -13,7 +13,7 @@ const MOUSSE_BUTTONS = {ORBIT: MOUSE.LEFT, ZOOM: MOUSE.MIDDLE, PAN: MOUSE.RIGHT}
 export class CameraControls {
   // Camera state
   private state = CAMERA_STATE.NONE;
-
+  public enabled = true;
   // Rotation speed factor
   private rotationSpeed = 0.001;
 
@@ -59,7 +59,7 @@ export class CameraControls {
    * Function to handle the mousse wheel event.
    * @param event
    */
-  handleMouseWheel(event : any) {
+  handleMouseWheel(event: any) {
     // event.preventDefault();
     event.stopPropagation();
 
@@ -75,7 +75,7 @@ export class CameraControls {
    * => Rotation start.
    * @param event
    */
-  onMouseDown(event : any) {
+  onMouseDown(event: any) {
     event.preventDefault();
     if (event.button === MOUSSE_BUTTONS.ORBIT) {
       this.handleMouseDownRotate(event);
@@ -87,7 +87,7 @@ export class CameraControls {
    * Set initial rotation.
    * @param event
    */
-  handleMouseDownRotate(event : any) {
+  handleMouseDownRotate(event: any) {
     this.rotateStart.set(event.clientX, event.clientY);
   }
 
@@ -96,11 +96,10 @@ export class CameraControls {
    *  => Rotation in progress.
    * @param event
    */
-  onMouseMove(event : any) {
+  onMouseMove(event: any) {
     event.preventDefault();
-
-    if (this.state === CAMERA_STATE.ROTATE) {
-      // this.handleMouseMoveRotate(event);
+    if (this.enabled) {
+      this.handleMouseMoveRotate(event);
     }
   }
 
@@ -116,7 +115,7 @@ export class CameraControls {
    * Function to compute the camera movement.
    * @param event
    */
-  handleMouseMoveRotate(event : any) {
+  handleMouseMoveRotate(event: any) {
     if (this.state === CAMERA_STATE.ROTATE) {
       this.rotateEnd.set(event.clientX, event.clientY);
 
@@ -136,7 +135,7 @@ export class CameraControls {
    * Compute the X axis rotation.
    * @param angle
    */
-  rotateLeft(angle : any) {
+  rotateLeft(angle: any) {
     this.theta -= angle;
   }
 
@@ -144,7 +143,7 @@ export class CameraControls {
    * Compute the Y axis rotation.
    * @param angle
    */
-  rotateUp(angle : any) {
+  rotateUp(angle: any) {
     this.phi -= angle;
   }
 

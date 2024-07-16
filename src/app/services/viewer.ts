@@ -23,7 +23,7 @@ export class Viewer {
   private light = new AmbientLight(0x404040); // soft white light
   private directionalLight1 = new DirectionalLight(0xffeeff, 0.8);
   private directionalLight2 = new DirectionalLight(0xffffff, 0.8);
-  private camera = new PerspectiveCamera(45, NaN, 0.1, 1000);
+  private camera = new PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
   /**
    * Controls which update the position of the camera.
    */
@@ -179,7 +179,7 @@ export class Viewer {
       return;
     }
     if (this.transformControl)
-    this.transformControl.setSize(20 / this.transformControl.position.distanceTo(this.camera.position) * Math.min(1.9 * Math.tan(Math.PI * this.camera.fov / 360) / this.camera.zoom, 7));
+      this.transformControl.setSize(20 / this.transformControl.position.distanceTo(this.camera.position) * Math.min(1.9 * Math.tan(Math.PI * this.camera.fov / 360) / this.camera.zoom, 7));
 
     this.update(time - prevTime);
     this.render();
@@ -202,37 +202,9 @@ export class Viewer {
     ifcLoader.ifcManager.setWasmPath('./assets/');
     ifcLoader.load(url, (model) => {
       console.log("model", model)
-      // this.transformModel(model)
       this.scene.add(model)
     })
   }
-
-
-  // transformModel(ifcModel: IFCModel) {
-  //   const control = new TransformControls(this.camera, this.renderer.domElement)
-  //   this.transformControls.push(control)
-  //   // control.addEventListener('dragging-changed', function (event) {
-  //   //   control.enabled = !event.value;
-  //   // });
-  //   // controls.addEventListener('change', this.render);
-  //   control.attach(ifcModel)
-  //   this.scene.add(control)
-
-  //   console.log("transform", this.transformControls)
-  //   window.addEventListener('keydown', function (event) {
-  //     switch (event.code) {
-  //       case 'KeyG':
-  //         control.setMode('translate')
-  //         break
-  //       case 'KeyR':
-  //         control.setMode('rotate')
-  //         break
-  //       case 'KeyS':
-  //         control.setMode('scale')
-  //         break
-  //     }
-  //   })
-  // }
 
   addTransformControls(event: MouseEvent) {
     const mouse = new Vector2();
@@ -248,6 +220,9 @@ export class Viewer {
         this.transformControl = control;
         control.attach(child);
         this.scene.add(control);
+        control.addEventListener('dragging-changed', (event) => {
+          this.cameraControls.enabled = !event.value
+        });
         window.addEventListener('keydown', function (event) {
           switch (event.code) {
             case 'KeyG':
