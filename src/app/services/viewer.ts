@@ -50,7 +50,8 @@ export class Viewer {
    */
   // @ts-ignore
   private pointCloudOctree: PointCloudOctree;
-  private transformControls: TransformControls[] = [];
+  // @ts-ignore
+  private transformControl: TransformControls;
   /**
    * Initializes the viewer into the specified element.
    *
@@ -177,9 +178,9 @@ export class Viewer {
     if (prevTime === undefined) {
       return;
     }
-    this.transformControls.forEach((control) => {
-      control.setSize(20 / control.position.distanceTo(this.camera.position) * Math.min(1.9 * Math.tan(Math.PI * this.camera.fov / 360) / this.camera.zoom, 7));
-    })
+    if (this.transformControl)
+    this.transformControl.setSize(20 / this.transformControl.position.distanceTo(this.camera.position) * Math.min(1.9 * Math.tan(Math.PI * this.camera.fov / 360) / this.camera.zoom, 7));
+
     this.update(time - prevTime);
     this.render();
   };
@@ -233,7 +234,7 @@ export class Viewer {
   //   })
   // }
 
-  addTransformControls(event : MouseEvent) {
+  addTransformControls(event: MouseEvent) {
     const mouse = new Vector2();
     const raycaster = new Raycaster();
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
@@ -244,7 +245,7 @@ export class Viewer {
       const intersects = raycaster.intersectObject(child);
       if (child.type == 'Mesh' && intersects.length > 0) {
         const control = new TransformControls(this.camera, this.renderer.domElement);
-        this.transformControls.push(control);
+        this.transformControl = control;
         control.attach(child);
         this.scene.add(control);
         window.addEventListener('keydown', function (event) {
@@ -262,9 +263,9 @@ export class Viewer {
         })
         break;
       } else {
-        this.transformControls.map(control => {
-          control.detach();
-        })
+        if (this.transformControl) {
+          this.transformControl.detach();
+        }
       }
     }
   }
