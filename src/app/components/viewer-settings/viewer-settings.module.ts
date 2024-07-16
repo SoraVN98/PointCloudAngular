@@ -10,6 +10,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatRadioModule } from '@angular/material/radio';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatIconModule,
     MatMenuModule,
     BrowserAnimationsModule,
-    MatRadioModule
+    MatRadioModule,
+    MatSidenavModule
   ],
   declarations: [ViewerSettingsComponent],
   exports: [ViewerSettingsComponent]
