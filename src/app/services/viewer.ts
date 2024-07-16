@@ -75,13 +75,33 @@ export class Viewer {
     this.resize();
     window.addEventListener('resize', this.resize);
     // Manage zoom
-    window.addEventListener('wheel', this.cameraControls.handleMouseWheel.bind(this.cameraControls), false);
+    window.addEventListener('wheel', (event) => {
+      const canvas = this.renderer.domElement
+      if (event.target === canvas) {
+        this.cameraControls.handleMouseWheel(event)
+      }
+    }, false);
     // Manage click
-    window.addEventListener('mousedown', this.cameraControls.onMouseDown.bind(this.cameraControls), false);
+    window.addEventListener('mousedown', (event) => {
+      const canvas = this.renderer.domElement
+      if (event.target === canvas) {
+        this.cameraControls.onMouseDown(event)
+      }
+    }, false);
     // manage move
-    window.addEventListener('mousemove', this.cameraControls.onMouseMove.bind(this.cameraControls), false);
+    window.addEventListener('mousemove', (event) => {
+      const canvas = this.renderer.domElement
+      if (event.target === canvas) {
+        this.cameraControls.onMouseMove(event)
+      }
+    }, false);
     // manage mouse up to stop the rotation
-    window.addEventListener('mouseup', this.cameraControls.onMouseUp.bind(this.cameraControls), false);
+    window.addEventListener('mouseup', (event) => {
+      const canvas = this.renderer.domElement
+      if (event.target === canvas) {
+        this.cameraControls.onMouseUp()
+      }
+    }, false);
     // select mesh to translate, rotate, scale
     window.addEventListener('dblclick', (event) => { this.addTransformControls(event) }, false);
 
