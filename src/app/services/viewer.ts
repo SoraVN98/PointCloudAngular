@@ -77,7 +77,7 @@ export class Viewer {
     // Manage zoom
     window.addEventListener('wheel', this.cameraControls.handleMouseWheel.bind(this.cameraControls), false);
     // Manage click
-    window.addEventListener('mousedown', (event) =>this.cameraControls.onMouseDown.bind(this.cameraControls), false);
+    window.addEventListener('mousedown', this.cameraControls.onMouseDown.bind(this.cameraControls), false);
     // manage move
     window.addEventListener('mousemove', this.cameraControls.onMouseMove.bind(this.cameraControls), false);
     // manage mouse up to stop the rotation

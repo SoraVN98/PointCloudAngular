@@ -40,8 +40,8 @@ export class PotreeViewerComponent implements OnInit, OnDestroy {
     const ifcURL = './assets/ifc/Project1.ifc'
     const ifcURL1 = './assets/ifc/test2.ifc'
     // this.loadPointCloud(pcURL);
-    // this.loadIfcFile(ifcURL1);
-    // this.loadIfcFile(ifcURL);
+    this.loadIfcFile(ifcURL1);
+    this.loadIfcFile(ifcURL);
 
   }
 
