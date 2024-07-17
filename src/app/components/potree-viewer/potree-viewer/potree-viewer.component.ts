@@ -64,7 +64,6 @@ export class PotreeViewerComponent implements OnInit, OnDestroy {
         pco.rotateX(-Math.PI / 2);
         this.pointCloudOctree = pco;
         this.updatePointCloud();
-        console.log("point", this.pointCloudOctree)
       })
       .catch(err => console.error(err));
   }
